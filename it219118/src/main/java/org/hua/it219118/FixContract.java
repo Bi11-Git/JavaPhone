@@ -17,7 +17,8 @@ public class FixContract extends Contract{
     private int networkSpeed;
     private int networkType;
 
-    public FixContract(int id, long phoneNumber) {
+    public FixContract(int id, String phoneNumber) {
+
         super(id, phoneNumber);
     }
      

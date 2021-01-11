@@ -14,7 +14,7 @@ public class MobileContract extends Contract{
     private int freeMessages;
     
 
-    public MobileContract(int id, int phoneNumber) {
+    public MobileContract(int id, String phoneNumber) {
         super(id, phoneNumber);
     }
 

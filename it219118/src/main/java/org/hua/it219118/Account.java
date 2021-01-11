@@ -33,6 +33,7 @@ public class Account {
     private ArrayList<Contract> contracts;
 
     public Account(int vatNumber, String identityNumber) {
+        contracts = new ArrayList<Contract>();
         this.vatNumber = vatNumber;
         this.identityNumber = identityNumber;
     }
@@ -62,13 +63,11 @@ public class Account {
         return identityNumber;
     }
     
-    public Contract createNewFixContact(long fixPhoneNumber) {
-        
-        /*
-        if(fixPhoneNumber < 2000000000 || fixPhoneNumber > 2999999999 ){
+    public Contract createNewFixContact(String fixPhoneNumber) {
+
+        if(fixPhoneNumber.length() != 10) {
             return null;
         }
-        */
 
         FixContract n = new FixContract(id++ , fixPhoneNumber);
         this.addContract(n);
@@ -81,10 +80,14 @@ public class Account {
         contracts.add(anContract);
     }
     
-    public boolean getAllContractsPhoneNumber(long phoneNumber){
-        
+    public boolean getAllContractsPhoneNumber(String phoneNumber){
+        if(contracts.isEmpty()) {
+            return false;
+        }
+        String phone;
         for(Contract contract : contracts){
-            if(contract.getPhoneNumber() == phoneNumber) {
+            phone = contract.getPhoneNumber();
+            if(phone.contentEquals(phoneNumber)) {
                 return true;
             }
         }

@@ -24,7 +24,10 @@ public class UserInterface {
         this.input = new Scanner(System.in);
         
         welcomeScreen();
-    }   
+    }
+
+
+
     
     public void mainMenu(){
         System.out.println("1 : add new contract");
@@ -35,7 +38,7 @@ public class UserInterface {
         System.out.println("Choose an option :");
 
         int userInput = Integer.parseInt(input.nextLine());
-        
+
         switch(userInput) {
             case 1:
                 addContract();
@@ -88,7 +91,7 @@ public class UserInterface {
         
         if(currentAccount == null) {
             
-            System.out.println("This account dosent exist!");  
+            System.out.println("This account does not exist!");
 
             welcomeScreen();
             
@@ -123,9 +126,9 @@ public class UserInterface {
     public void updateAccCategory(){
         System.out.println("what account do you want to have?");
         System.out.println( Account.INDIVIDUAL + " : individual account");
-        System.out.println( Account.PROFESSIONAL + " : proffesional account");
+        System.out.println( Account.PROFESSIONAL + " : professional account");
         System.out.println( Account.STUDENT + " : student account");
-        System.out.println("Choose n option :");
+        System.out.println("Choose an option :");
         
         int userInput = Integer.parseInt(input.nextLine());
         
@@ -171,7 +174,7 @@ public class UserInterface {
         currentAccount.seteAccount(false);
         
         switch (answer) {
-            case "YES":
+            case "YES" :
                 currentAccount.seteAccount(true);
                 break;
             case "Yes":
@@ -198,7 +201,7 @@ public class UserInterface {
         System.out.println("1 : fix contract ");
         System.out.println("2 : mobile contract");
         System.out.println("0 : exit");
-        System.out.printf("coose an option :");
+        System.out.printf("choose an option :");
         
         int userInput = Integer.parseInt(input.nextLine()); // try catch
         
@@ -217,22 +220,26 @@ public class UserInterface {
     }
     
     public void createFixContract() {
+
         
-        System.out.println("Enter an fix phone number :");
+        System.out.printf("Enter next 9 digits for your2 fix phone number :2");
+        currentContract = null;
         
         do{
-            long userInput = Long.parseLong(input.nextLine());
+            String userInput = "2" + input.nextLine();
             
-            boolean notExist = db.checkAllCOntractsPhoneNumbers(userInput);
+            boolean notExist = db.checkAllContractsPhoneNumbers(userInput);
         
             currentContract = currentAccount.createNewFixContact(userInput);
         
             if(currentContract == null) {
-            
-                System.out.println("Enter an fix phone number :");
+
+                System.out.printf("Enter next 9 digits for your2 fix phone number :2");
             }
             
         } while (currentContract == null);
+
+        System.out.println("Do you want an ");
 
         
     }

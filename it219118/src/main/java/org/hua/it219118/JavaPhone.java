@@ -39,7 +39,7 @@ public class JavaPhone {
     }
     
     
-    public boolean checkAllCOntractsPhoneNumbers(long phoneNumber) {
+    public boolean checkAllContractsPhoneNumbers(String phoneNumber) {
         
         for(Account a : accounts){
             if(a.getAllContractsPhoneNumber(phoneNumber)) {

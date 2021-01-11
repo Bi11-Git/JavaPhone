@@ -18,7 +18,7 @@ public abstract class Contract {
     public static final int STANDING_ORDER = 2;
     
     private final int id;
-    private final long phoneNumber;
+    private final String phoneNumber;
     private int mobileMin;
     private int fixMin;
     private LocalDate startingDate;
@@ -26,7 +26,7 @@ public abstract class Contract {
     private int payMethod;
     private boolean internet;
     
-    public Contract(int id, long phoneNumber) {
+    public Contract(int id, String phoneNumber) {
         this.id = id;
         this.phoneNumber = phoneNumber;
     }
@@ -35,7 +35,8 @@ public abstract class Contract {
         return id;
     }
 
-    public long getPhoneNumber() {
+    public String getPhoneNumber() {
+
         return phoneNumber;
     }
       
