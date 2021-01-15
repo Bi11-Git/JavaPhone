@@ -9,7 +9,7 @@ package org.hua.it219118;
  *
  * @author bi11
  */
-public class FixContract extends Contract{
+public class FixContract extends Contract {
     
     public static final int ADSL = 0;
     public static final int VDSL = 1;

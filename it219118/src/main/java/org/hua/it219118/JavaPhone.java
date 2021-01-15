@@ -6,60 +6,109 @@
 package org.hua.it219118;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Scanner;
 
 /**
  *
  * @author bi11
  */
 public class JavaPhone {
-    private final ArrayList<Account> accounts;
-    private int id = 2351;
 
+    private ArrayList<Account> accountsList;
+    private int id = 2351;
+    Scanner input ;
     
     public JavaPhone() {
-        accounts = new ArrayList<>();
-        
+
+        accountsList = new ArrayList<Account>();
+        this.input = new Scanner(System.in);
+
+        welcomeScreen();
+
     }
-    
-    
-    public Account addAccount(int vatNumber, String identityNumber) {
-        
-        for(Account a : accounts){
-            if((a.getIdentityNumber().contentEquals(identityNumber)) || (a.getVatNumber() == vatNumber)){
-                return null;
+
+    public void welcomeScreen() {
+        System.out.println(" Welcome to JavaPhone!!! ");
+        System.out.println(" 1 : Log In");
+        System.out.println(" 2 : Sign Up");
+        System.out.println(" 0 Exit");
+        System.out.println("Choose n option :");
+
+        int userInput = Integer.parseInt(input.nextLine());
+
+        switch (userInput) {
+            case 0:
+                break;
+            case 1:
+                logIn();
+                break;
+            case 2:
+                signUp();
+                break;
+        }
+
+    }
+
+    public  void logIn() {
+
+        System.out.println("Give the vat number or identification number :");
+
+        String userInput = input.nextLine();
+
+        Account currentAccount = null;
+
+        for(Account acc : accountsList ) {
+
+            if( userInput.contentEquals(acc.getIdentityNumber()) || userInput.contentEquals(String.valueOf(acc.getVatNumber()))){
+                currentAccount = acc;
             }
         }
-        
-        
-        Account n = new Account(vatNumber, identityNumber);
-        accounts.add(n);
-        
-        return n;
-    }
-    
-    
-    public boolean checkAllContractsPhoneNumbers(String phoneNumber) {
-        
-        for(Account a : accounts){
-            if(a.getAllContractsPhoneNumber(phoneNumber)) {
-                return true;
-            }
+
+        if(currentAccount == null) {
+
+            System.out.println("This account does not exist!");
+
+            welcomeScreen();
+
+        } else {
+
+            currentAccount.mainMenu();
         }
-        
-        return false;
+
+        welcomeScreen();
+
     }
-    
-    public Account getAccount(String accSearch) {
-        
-        for(Account acc : accounts) {
-            
-            if( accSearch.contentEquals(acc.getIdentityNumber()) || accSearch.contentEquals(String.valueOf(acc.getVatNumber()))){
-                return acc;
+
+    public void signUp() {
+
+        Account currentAccount = null;
+
+        do{
+            System.out.println(" Enter a vat number :");
+            int vatNumber = Integer.parseInt(input.nextLine());
+
+            System.out.println(" Enter a identity number :");
+            String identityNumber = input.nextLine();
+
+            for(Account a : accountsList){
+                if( !(a.getIdentityNumber().contentEquals(identityNumber)) || (a.getVatNumber() == vatNumber) ){
+                    currentAccount = new Account(vatNumber, identityNumber);
+
+                    accountsList.add(currentAccount);
+                }
             }
-        }
-        
-        return null;
+
+
+        } while ( currentAccount == null);
+
+
+        currentAccount.configuringNewAccount();
+
+        currentAccount.mainMenu();
+
+        welcomeScreen();
+
     }
+
     
 }

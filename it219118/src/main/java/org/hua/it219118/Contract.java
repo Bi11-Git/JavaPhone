@@ -11,8 +11,8 @@ import java.time.LocalDate;
  *
  * @author bi11
  */
-public abstract class Contract { 
-    
+public abstract class Contract {
+
     public static final int CREDIT_CART = 0;
     public static final int CASH = 1;
     public static final int STANDING_ORDER = 2;

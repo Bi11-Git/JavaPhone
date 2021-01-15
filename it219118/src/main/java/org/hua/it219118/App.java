@@ -12,10 +12,9 @@ package org.hua.it219118;
 public class App {
     public static void main(String [] args){
         
-    JavaPhone db = new JavaPhone();
-    
-    UserInterface userInterface = new UserInterface(db);
-    
+     new JavaPhone();
+
+
     
     }
 }

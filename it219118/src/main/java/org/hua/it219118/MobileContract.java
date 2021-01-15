@@ -9,6 +9,7 @@ package org.hua.it219118;
  *
  * @author bi11
  */
+
 public class MobileContract extends Contract{
     private int freeData;
     private int freeMessages;
