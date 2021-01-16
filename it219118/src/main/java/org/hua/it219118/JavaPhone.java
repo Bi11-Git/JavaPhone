@@ -28,13 +28,17 @@ public class JavaPhone {
     }
 
     public void welcomeScreen() {
-        System.out.println(" Welcome to JavaPhone!!! ");
+        System.out.println(" Welcome to JavaPhone ");
         System.out.println(" 1 : Log In");
         System.out.println(" 2 : Sign Up");
         System.out.println(" 0 Exit");
-        System.out.println("Choose n option :");
+        System.out.printf("Choose an option :");
+
+
 
         int userInput = Integer.parseInt(input.nextLine());
+
+        System.out.println(userInput);
 
         switch (userInput) {
             case 0:
@@ -73,9 +77,9 @@ public class JavaPhone {
         } else {
 
             currentAccount.mainMenu();
-        }
+            welcomeScreen();
 
-        welcomeScreen();
+        }
 
     }
 

@@ -16,11 +16,11 @@ import java.util.Scanner;
  */
 public class Account {
 
-    private static ArrayList<String> phoneNumbersList = new ArrayList<String>();
+    private static final ArrayList<String> phoneNumbersList = new ArrayList<>();
         
-    public static final int INDIVIDUAL = 1;
-    public static final int PROFESSIONAL = 2;
-    public static final int STUDENT = 3;
+    public static final int INDIVIDUAL = 0;
+    public static final int PROFESSIONAL = 10;
+    public static final int STUDENT = 15;
 
     public static final String FIX = "2";
     public static final String MOBILE = "6";
@@ -31,9 +31,9 @@ public class Account {
     private int category;
     private String email;
     private String address;
-    private boolean eAccount;
+    private int eAccount;
     
-    private int discount; // auto prepei na ftia3w !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    private int discount;
     
     private ArrayList<Contract> contractsList;
     private Scanner input;
@@ -45,7 +45,7 @@ public class Account {
         input = new Scanner(System.in);
         this.vatNumber = vatNumber;
         this.identityNumber = identityNumber;
-        eAccount = false;
+        eAccount = 0;
         rand = new Random();
 
     }
@@ -66,9 +66,11 @@ public class Account {
                 break;
             case Account.PROFESSIONAL:
                 category = PROFESSIONAL;
+                discount = PROFESSIONAL;
                 break;
             case Account.STUDENT:
                 category = STUDENT;
+                discount = STUDENT;
                 break;
             default:
                 break;
@@ -80,9 +82,8 @@ public class Account {
         System.out.println("Enter an address :");
         address = input.nextLine();
 
-        System.out.println("Do you want an e-Account (Y/N) :");
+        System.out.println("e-Accounts have +2% discount \n Do you want an e-Account (Y/N) :");
         String answer = input.nextLine();
-
 
         switch (answer) {
             case "YES" :
@@ -90,7 +91,7 @@ public class Account {
             case "yes":
             case "y":
             case "Y":
-                eAccount = true;
+                eAccount = 2;
                 break;
         }
 
@@ -111,7 +112,7 @@ public class Account {
 
         switch(userInput) {
             case 1:
-                //addContract();
+                addContract();
                 break;
             case 2:
                 //deleteContract();
@@ -144,17 +145,19 @@ public class Account {
         System.out.println("0 : exit");
         System.out.printf("choose an option :");
 
-        int userInput = Integer.parseInt(input.nextLine()); // try catch
+
+        int userInput = Integer.parseInt(input.nextLine());
+
 
         switch (userInput) {
-            case 0:
-                mainMenu();
-                break;
             case 1:
                 createContract(FIX);
                 break;
             case 2:
                 createContract(MOBILE);
+                break;
+            default:
+                mainMenu();
                 break;
 
         }
@@ -191,25 +194,62 @@ public class Account {
         Contract n;
 
         if(prefix.contentEquals("2")) {
-            n = new FixContract(rand.nextInt(10000), userInput);
+            n = new FixContract(rand.nextInt(10000), userInput, vatNumber);
         } else {
-            n = new MobileContract(rand.nextInt(10000), userInput);
+            n = new MobileContract(rand.nextInt(10000), userInput, vatNumber);
 
         }
 
         this.contractsList.add(n);
         this.phoneNumbersList.add(userInput);
 
+        checkDiscount();
         mainMenu();
 
     }
     
     public void deleteContract() {
-        
-        
+
+
+
+        checkDiscount();
+        mainMenu();
     }
     
     public void printContract() {
-        
+
+
+
+        mainMenu();
+    }
+
+    public void printStatistics() {
+
+
+
+        mainMenu();
+    }
+
+    public void checkDiscount() {
+
+        discount = eAccount + category;
+        int count = 3;
+        for(Contract c : contractsList) {
+            if(c.isActive()) {
+                if(count > 0) {
+                    discount += 5;
+                    count--;
+                }
+
+                discount += c.hasMinutesDiscount();
+                discount += c.hasPaymentMethodDiscount();
+
+            }
+        }
+
+        if(discount > 45) {
+            discount = 45;
+        }
+
     }
 }
