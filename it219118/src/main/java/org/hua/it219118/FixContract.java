@@ -20,6 +20,14 @@ public class FixContract extends Contract {
     public FixContract(int id, String phoneNumber) {
 
         super(id, phoneNumber);
+
+        configuringFixContract();
+    }
+
+    public void configuringFixContract(){
+
+
+
     }
      
 }

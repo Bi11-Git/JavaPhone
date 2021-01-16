@@ -29,6 +29,11 @@ public abstract class Contract {
     public Contract(int id, String phoneNumber) {
         this.id = id;
         this.phoneNumber = phoneNumber;
+
+        configuringContract();
+    }
+
+    public void  configuringContract() {
     }
 
     public int getId() {

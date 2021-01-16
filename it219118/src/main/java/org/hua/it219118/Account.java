@@ -172,7 +172,7 @@ public class Account {
             exist = false;
             userInput = prefix + input.nextLine();
 
-            if(userInput.length() != 9) {
+            if(userInput.length() != 10) {
                 System.out.println(userInput + "! Is not 10 digits!!!");
                 exist = true;
             }
@@ -188,15 +188,17 @@ public class Account {
 
         } while (exist);
 
+        Contract n;
+
         if(prefix.contentEquals("2")) {
-            FixContract n = new FixContract(rand.nextInt(10000), userInput);
-            this.contractsList.add(n);
-            this.phoneNumbersList.add(userInput);
+            n = new FixContract(rand.nextInt(10000), userInput);
         } else {
-            MobileContract n = new MobileContract(rand.nextInt(10000), userInput);
-            this.contractsList.add(n);
-            this.phoneNumbersList.add(userInput);
+            n = new MobileContract(rand.nextInt(10000), userInput);
+
         }
+
+        this.contractsList.add(n);
+        this.phoneNumbersList.add(userInput);
 
         mainMenu();
 
