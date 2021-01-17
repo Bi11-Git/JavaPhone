@@ -120,11 +120,50 @@ public class JavaPhone {
 
     public void printStatistics() {
 
+        int counter = 0;
+        int mobileMin = 0, sumMobileMin = 0, minMobileMin = 0, maxMobileMin = 0;
+        int fixMin = 0, sumFixMin = 0 , minFixMin = 0 , maxFixMin = 0;
+        int sms = 0 , sumSms = 0 , minSms = 0, maxSms = 0;
+        int data = 0 , sumData = 0 , minData = 0 , maxData = 0 ;
+
 
 
         for(Account ac : accountsList) {
             for( Contract con : ac.getContractsList() ) {
 
+                mobileMin = con.getMobileMin();
+                sumMobileMin += mobileMin;
+
+                if( mobileMin > maxMobileMin)
+                    maxMobileMin = mobileMin;
+
+                if ( mobileMin < minMobileMin )
+                    minMobileMin = mobileMin;
+
+
+                fixMin = con.getFixMin();
+                sumFixMin += fixMin;
+
+                if( fixMin > maxFixMin)
+                    maxFixMin = fixMin;
+
+                if ( fixMin < minFixMin )
+                    minFixMin = fixMin;
+
+
+                sms = con.getMessages();
+                sumSms += sms;
+
+                if( sms > maxSms)
+                    maxSms = sms;
+
+                if ( sms < minSms )
+                    minSms = sms;
+
+
+
+
+                counter++;
 
             }
         }

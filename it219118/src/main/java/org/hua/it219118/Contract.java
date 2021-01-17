@@ -210,7 +210,6 @@ public abstract class Contract {
     }
 
     public String getInternet() {
-
         return null;
     }
 
