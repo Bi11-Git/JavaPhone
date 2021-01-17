@@ -58,6 +58,8 @@ public class FixContract extends Contract {
                 networkSpeed = "50Mbps";
                 break;
             default:
+                networkType = "No";
+                networkSpeed = "0Mbps";
                 break;
         }
 
@@ -81,4 +83,15 @@ public class FixContract extends Contract {
 
         return price;
     }
+
+    @Override
+    public String toString(){
+        return String.format(super.toString() + networkType + "-" + networkSpeed + "\tNo sms" + "\t" + this.getPrice() + "€/Month"  );
+    }
+
+    @Override
+    public String getInternet() {
+        return networkSpeed;
+    }
+
 }

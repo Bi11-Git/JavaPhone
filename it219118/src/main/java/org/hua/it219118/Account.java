@@ -93,6 +93,8 @@ public class Account {
             case "Y":
                 eAccount = 2;
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + answer);
         }
 
         addContract();
@@ -103,10 +105,9 @@ public class Account {
 
         System.out.println("1 : add new contract");
         System.out.println("2 : delete a contract");
-        System.out.println("3 : print all contract's details");
-        System.out.println("4 : update account details");
+        System.out.println("3 : show all contract's details");
         System.out.println("0 : sign out");
-        System.out.println("Choose an option :");
+        System.out.printf("Choose an option :");
 
         int userInput = Integer.parseInt(input.nextLine());
 
@@ -115,20 +116,19 @@ public class Account {
                 addContract();
                 break;
             case 2:
-                //deleteContract();
+                deleteContract();
                 break;
             case 3:
-                //printAllContracts();
-                break;
-            case 4:
-                //updateDetails();
+                showContractDetails();
                 break;
             case 0:
                 return;
+            default:
+                mainMenu();
+                break;
         }
 
     }
-
 
     public int getVatNumber() {
         return vatNumber;
@@ -207,26 +207,44 @@ public class Account {
         mainMenu();
 
     }
+
+
+    public void showContractDetails() {
+
+        System.out.println(" \tid\tstarting date\texpiration date\tminutes to cell phones\tminutes to fix phones\tinternet\tsms\tprice\tprice after discount ");
+
+        int count = 1;
+        for(Contract c : contractsList) {
+            Double d = (c.getPrice() * (100 - discount) ) / 100 ;
+            System.out.println(count + c.toString() + d );
+            count++;
+        }
+
+
+        mainMenu();
+    }
+
     
     public void deleteContract() {
 
+        showContractDetails();
 
+        System.out.print(" Which contract do you want to delete? :");
+        int userInput = Integer.parseInt(input.nextLine());
+
+        if ( contractsList.size() <= userInput) {
+            Contract c = contractsList.get(userInput - 1);
+            contractsList.remove(userInput - 1);
+
+            for ( int i = 0 ; i < phoneNumbersList.size() ; i++ ) {
+                String num = phoneNumbersList.get(i);
+                if( num.contentEquals(c.getPhoneNumber())) {
+                    phoneNumbersList.remove(i);
+                }
+            }
+        }
 
         checkDiscount();
-        mainMenu();
-    }
-    
-    public void printContract() {
-
-
-
-        mainMenu();
-    }
-
-    public void printStatistics() {
-
-
-
         mainMenu();
     }
 
@@ -251,5 +269,9 @@ public class Account {
             discount = 45;
         }
 
+    }
+
+    public ArrayList<Contract> getContractsList() {
+        return contractsList;
     }
 }

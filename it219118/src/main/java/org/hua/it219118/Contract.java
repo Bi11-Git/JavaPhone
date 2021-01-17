@@ -192,17 +192,29 @@ public abstract class Contract {
         return 0;
     }
 
-    /*
-
-    public int getId() {
-        return id;
+    @Override
+    public String toString() {
+        return String.format("\t" + id + "\t" +startingDate + "\t" + endingDate + "\t" + mobileMin + "\t" + fixMin + "\t");
     }
 
     public String getPhoneNumber() {
-
         return phoneNumber;
     }
 
+    public int getFixMin() {
+        return fixMin;
+    }
 
-     */
+    public int getMobileMin() {
+        return mobileMin;
+    }
+
+    public String getInternet() {
+
+        return null;
+    }
+
+    public int getMessages() {
+        return 0;
+    }
 }

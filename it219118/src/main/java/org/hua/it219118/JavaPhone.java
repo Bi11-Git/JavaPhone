@@ -14,13 +14,12 @@ import java.util.Scanner;
  */
 public class JavaPhone {
 
-    private ArrayList<Account> accountsList;
-    private int id = 2351;
+    private final ArrayList<Account> accountsList;
     Scanner input ;
     
     public JavaPhone() {
 
-        accountsList = new ArrayList<Account>();
+        accountsList = new ArrayList<>();
         this.input = new Scanner(System.in);
 
         welcomeScreen();
@@ -28,13 +27,12 @@ public class JavaPhone {
     }
 
     public void welcomeScreen() {
-        System.out.println(" Welcome to JavaPhone ");
-        System.out.println(" 1 : Log In");
-        System.out.println(" 2 : Sign Up");
-        System.out.println(" 0 Exit");
-        System.out.printf("Choose an option :");
-
-
+        System.out.print(" Welcome to JavaPhone \n" +
+                " 1 : Log In\n" +
+                " 2 : Sign Up\n" +
+                " 3 : Print Statistics\n" +
+                " 0 Exit\n" +
+                "Choose an option :");
 
         int userInput = Integer.parseInt(input.nextLine());
 
@@ -48,6 +46,13 @@ public class JavaPhone {
                 break;
             case 2:
                 signUp();
+                break;
+            case 3:
+                printStatistics();
+                break;
+            default:
+                System.out.println("Wrong input : " + userInput);
+                welcomeScreen();
                 break;
         }
 
@@ -72,14 +77,13 @@ public class JavaPhone {
 
             System.out.println("This account does not exist!");
 
-            welcomeScreen();
-
         } else {
 
             currentAccount.mainMenu();
-            welcomeScreen();
 
         }
+
+        welcomeScreen();
 
     }
 
@@ -112,6 +116,27 @@ public class JavaPhone {
 
         welcomeScreen();
 
+    }
+
+    public void printStatistics() {
+
+
+
+        for(Account ac : accountsList) {
+            for( Contract con : ac.getContractsList() ) {
+
+
+            }
+        }
+
+        System.out.println("Show fix contracts statistics");
+        System.out.println("\t");
+        System.out.println("Min\t");
+        System.out.println("Mean\t");
+        System.out.println("Max\t");
+
+
+        welcomeScreen();
     }
 
     

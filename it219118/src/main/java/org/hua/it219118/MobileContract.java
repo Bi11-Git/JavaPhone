@@ -52,8 +52,13 @@ public class MobileContract extends Contract{
                 System.out.println("You have 3GB/month");
                 freeData = 3;
                 break;
+            case 4:
+                System.out.println("You have 3GB/month");
+                freeData = 5;
+                break;
             default:
                 System.out.println("You dont have data in your contract");
+                freeData = 0;
                 break;
 
 
@@ -62,8 +67,9 @@ public class MobileContract extends Contract{
         System.out.println("How many sms do you want ? (Price: 0.25€/sms) \n" +
                 " 0. I dont want sms \n" +
                 " 1. 100 sms \n" +
-                " 2. 200 sms \n" +
-                " 3. 300 sms ");
+                " 2. 250 sms \n" +
+                " 3. 500 sms \n" +
+                " 4. 750 sms");
         System.out.printf("Choose an option :");
 
 
@@ -72,18 +78,23 @@ public class MobileContract extends Contract{
         switch (userInput) {
             case 1:
                 System.out.println("You have 100 sms/month");
-                freeData = 1;
+                freeMessages = 100 ;
                 break;
             case 2:
                 System.out.println("You have 200 sms/month");
-                freeData = 2;
+                freeMessages = 250 ;
                 break;
             case 3:
                 System.out.println("You have 300 sms/month");
-                freeData = 3;
+                freeMessages = 500;
+                break;
+            case 4:
+                System.out.println("You have 300 sms/month");
+                freeMessages = 750;
                 break;
             default:
                 System.out.println("You dont have sms in your contract");
+                freeMessages = 0;
                 break;
 
 
@@ -95,11 +106,25 @@ public class MobileContract extends Contract{
     public double getPrice() {
         double price = super.getPrice();
 
-        price += ((double)freeData) * 1.35;
-        price += ((double)freeMessages) * 0.25;
+        price += freeData * 1.35;
+        price += freeMessages * 0.25;
 
         return price;
     }
 
+    @Override
+    public String toString(){
+        return String.format(super.toString() +  freeData + "GB" + "\t" + freeMessages + " sms\t" + this.getPrice() + "€/Month"  );
+    }
+
+    @Override
+    public String getInternet() {
+        return String.valueOf(freeData);
+    }
+
+    @Override
+    public int getMessages() {
+        return freeMessages;
+    }
     
 }
