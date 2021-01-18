@@ -120,50 +120,102 @@ public class JavaPhone {
 
     public void printStatistics() {
 
-        int counter = 0;
+        int counterFix = 0 , counterMobile = 0;
         int mobileMin = 0, sumMobileMin = 0, minMobileMin = 0, maxMobileMin = 0;
         int fixMin = 0, sumFixMin = 0 , minFixMin = 0 , maxFixMin = 0;
-        int sms = 0 , sumSms = 0 , minSms = 0, maxSms = 0;
+        String internet = null ;
+        int internet24 = 0 , internet30 = 0 , internet50 = 0 ;
+
+        int mobileMinutes = 0, sumMobileMinutes = 0, minMobileMinutes = 0, maxMobileMinutes = 0;
+        int fixMinutes = 0, sumFixMinutes = 0 , minFixMinutes = 0 , maxFixMinutes = 0;
         int data = 0 , sumData = 0 , minData = 0 , maxData = 0 ;
+        int sms = 0 , sumSms = 0 , minSms = 0, maxSms = 0;
 
 
 
         for(Account ac : accountsList) {
             for( Contract con : ac.getContractsList() ) {
 
-                mobileMin = con.getMobileMin();
-                sumMobileMin += mobileMin;
+                if(con instanceof FixContract) {
 
-                if( mobileMin > maxMobileMin)
-                    maxMobileMin = mobileMin;
+                    mobileMin = con.getMobileMin();
+                    sumMobileMin += mobileMin;
 
-                if ( mobileMin < minMobileMin )
-                    minMobileMin = mobileMin;
+                    if (mobileMin > maxMobileMin)
+                        maxMobileMin = mobileMin;
+
+                    if (mobileMin < minMobileMin)
+                        minMobileMin = mobileMin;
+
+                    fixMin = con.getFixMin();
+                    sumFixMin += fixMin;
+
+                    if (fixMin > maxFixMin)
+                        maxFixMin = fixMin;
+
+                    if (fixMin < minFixMin)
+                        minFixMin = fixMin;
+
+                    internet = con.getInternet();
+
+                    switch (internet) {
+                        case "24Mbps":
+                            internet24++;
+                            break;
+                        case "30Mbps" :
+                            internet30++;
+                            break;
+                        case "50Mbps" :
+                            internet50++;
+                            break;
+                    }
+
+                    counterFix++;
+
+                } else if(con instanceof MobileContract) {
+
+                    mobileMinutes = con.getMobileMin();
+                    sumFixMinutes += mobileMinutes;
+
+                    if (mobileMinutes > maxMobileMinutes)
+                        maxMobileMinutes = mobileMinutes;
+
+                    if (mobileMinutes < minMobileMinutes)
+                        minMobileMinutes = mobileMinutes;
+
+                    fixMinutes = con.getFixMin();
+                    sumFixMin += fixMinutes;
+
+                    if (fixMinutes > maxFixMinutes)
+                        maxFixMinutes = fixMinutes;
+
+                    if (fixMinutes < minFixMinutes)
+                        minFixMinutes = fixMinutes;
 
 
-                fixMin = con.getFixMin();
-                sumFixMin += fixMin;
+                    data = con.getData();
+                    sumData += data;
 
-                if( fixMin > maxFixMin)
-                    maxFixMin = fixMin;
+                    if (data > maxData)
+                        maxData = data;
 
-                if ( fixMin < minFixMin )
-                    minFixMin = fixMin;
+                    if (data < minData)
+                        minData = data;
+
+                    sms = con.getMessages();
+                    sumSms += sms;
+
+                    if (sms > maxSms)
+                        maxSms = sms;
+
+                    if (sms < minSms)
+                        minSms = sms;
+
+                    counterMobile++;
 
 
-                sms = con.getMessages();
-                sumSms += sms;
 
-                if( sms > maxSms)
-                    maxSms = sms;
-
-                if ( sms < minSms )
-                    minSms = sms;
-
-
-
-
-                counter++;
+                }
 
             }
         }

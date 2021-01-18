@@ -33,7 +33,7 @@ public abstract class Contract {
     private int payMethod;
     private double price;
     Scanner input;
-    
+
     public Contract(int id, String phoneNumber, int vatNumber) {
         this.id = id;
         this.phoneNumber = phoneNumber;
@@ -42,7 +42,7 @@ public abstract class Contract {
 
     }
 
-    public void  configuringContract() {
+    public void configuringContract() {
 
         System.out.println("How match call minutes to mobile phones do you want ?\n" +
                 " Price is 10 cent per minute \n " +
@@ -120,13 +120,13 @@ public abstract class Contract {
         System.out.printf("In how match days from now do you want to start the contract? : ");
         userInput = Integer.parseInt(input.nextLine());
 
-        startingDate.plusDays((long)userInput);
+        startingDate.plusDays((long) userInput);
         endingDate = startingDate;
 
         System.out.printf("Give the duration of this contract (1 - 24 months) :");
         userInput = Integer.parseInt(input.nextLine());
 
-        endingDate.plusMonths((long)userInput);
+        endingDate.plusMonths((long) userInput);
 
         System.out.println("please enter your payment method \n" +
                 " (if you choose credit cart or Standing order as a payment method you get 5% discount\n" +
@@ -163,21 +163,21 @@ public abstract class Contract {
 
     public double getPrice() {
 
-        price = ((double)mobileMin) * 0.1 ;
-        price += ((double)fixMin) * 0.05 ;
+        price = ((double) mobileMin) * 0.1;
+        price += ((double) fixMin) * 0.05;
 
         return price;
     }
 
     public boolean isActive() {
-        return ((startingDate.compareTo(LocalDate.now()) >= 0 ) && (endingDate.compareTo(LocalDate.now()) <= 0));
+        return ((startingDate.compareTo(LocalDate.now()) >= 0) && (endingDate.compareTo(LocalDate.now()) <= 0));
     }
 
     public int hasMinutesDiscount() {
-        if(mobileMin + fixMin >= 1000) {
-            if(phoneNumber.charAt(0) == '2') {
+        if (mobileMin + fixMin >= 1000) {
+            if (phoneNumber.charAt(0) == '2') {
                 return 8;
-            }  else {
+            } else {
                 return 11;
             }
         }
@@ -186,7 +186,7 @@ public abstract class Contract {
     }
 
     public int hasPaymentMethodDiscount() {
-        if((payMethod == CREDIT_CART) || payMethod == STANDING_ORDER) {
+        if ((payMethod == CREDIT_CART) || payMethod == STANDING_ORDER) {
             return 2;
         }
         return 0;
@@ -194,7 +194,7 @@ public abstract class Contract {
 
     @Override
     public String toString() {
-        return String.format("\t" + id + "\t" +startingDate + "\t" + endingDate + "\t" + mobileMin + "\t" + fixMin + "\t");
+        return String.format("\t" + id + "\t" + startingDate + "\t" + endingDate + "\t" + mobileMin + "\t" + fixMin + "\t");
     }
 
     public String getPhoneNumber() {
@@ -214,6 +214,10 @@ public abstract class Contract {
     }
 
     public int getMessages() {
+        return 0;
+    }
+
+    public int getData() {
         return 0;
     }
 }

@@ -118,8 +118,8 @@ public class MobileContract extends Contract{
     }
 
     @Override
-    public String getInternet() {
-        return String.valueOf(freeData);
+    public int getData() {
+        return freeData;
     }
 
     @Override
