@@ -5,12 +5,14 @@
  */
 package org.hua.it219118;
 
+import java.io.IOException;
+
 /**
  *
  * @author KillB
  */
 public class IT219118 {
-    public static void main(String [] args){
+    public static void main(String [] args) throws IOException {
         
      new JavaPhone();
 
