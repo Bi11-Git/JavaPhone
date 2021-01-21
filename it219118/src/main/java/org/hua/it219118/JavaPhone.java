@@ -5,7 +5,6 @@
  */
 package org.hua.it219118;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,28 +14,33 @@ import java.util.Scanner;
  */
 public class JavaPhone {
 
-    private final static int MAX_ATTEMPTS = 3;
-
     private final ArrayList<Account> accountsList;
     Scanner input ;
     int userInput;
-    
-    public JavaPhone() throws IOException {
 
+    //Constructor
+    public JavaPhone() {
+
+        System.out.println("Default Accounts vat Numbers : 111111111 and 222222222");
         accountsList = new ArrayList<>();
         this.input = new Scanner(System.in);
+
+        accountsList.add(new Account(111111111));
+        accountsList.add(new Account(222222222));
 
         welcomeScreen();
 
     }
 
-    public void welcomeScreen() throws IOException {
+    //is the main screen
+    private void welcomeScreen() {
 
-        boolean notNumber = true;
+        boolean isNotOk = true;
 
-        while(notNumber) {
+        //while loop to check the input from user
+        while(isNotOk) {
 
-            notNumber = false;
+            isNotOk = false;
 
             System.out.print(" Welcome to JavaPhone \n" +
                     " 1 : Log In\n" +
@@ -46,13 +50,15 @@ public class JavaPhone {
                     "Choose an option :");
 
             try {
-                userInput = Integer.parseInt(input.nextLine());
+                userInput = Integer.parseInt(input.nextLine()); //input from user becomes from String to Integer
             } catch (NumberFormatException e) {
                 System.out.println("not a number");
-                notNumber = true;
+                isNotOk = true; //if parseInt throw exception then isNotOk becomes true and repeat the loop
             }
+
         }
 
+        //a switch for choices
         switch (userInput) {
             case 0:
                 break;
@@ -73,14 +79,15 @@ public class JavaPhone {
 
     }
 
-    public  void logIn() throws IOException {
 
-        System.out.println("Give the vat number or identification number :");
+    private  void logIn() {
 
+        System.out.print("Give the vat number or identification number :");
         String userInput = input.nextLine();
 
         Account currentAccount = null;
 
+        //find the right account
         for(Account acc : accountsList ) {
 
             if( userInput.contentEquals(acc.getIdentityNumber()) || userInput.contentEquals(String.valueOf(acc.getVatNumber()))){
@@ -88,6 +95,7 @@ public class JavaPhone {
             }
         }
 
+        // if this vat number or identification number doesn't exist
         if(currentAccount == null) {
 
             System.out.println("This account does not exist!");
@@ -102,39 +110,73 @@ public class JavaPhone {
 
     }
 
-    public void signUp() throws IOException {
+    private void signUp() {
 
-        Account currentAccount = null;
+        int vatNumber = 0;
 
-        do{
-            int vatNumber = 0; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        boolean isNotOk ;
 
-            for( int i = 0; i < MAX_ATTEMPTS ; i++) {
 
-                System.out.println(" Enter a vat number :");
+        //do-while loop to get the vat number
+        do {
+            isNotOk = false;
 
-                try {
-                    vatNumber = Integer.parseInt(input.nextLine());
-                } catch (NumberFormatException e) {
-                    Runtime.getRuntime().exec("cls");
-                    System.out.println("not a number");
-                    if(i == MAX_ATTEMPTS)
-                        System.exit(1);
-                }
+            System.out.print("Enter a vat number :");
+
+            //convert the input to integer
+            try {
+                vatNumber = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("not a number");
+                isNotOk = true;
             }
 
-            System.out.println(" Enter a identity number :");
-            String identityNumber = input.nextLine();
+            //check the right length
+            if(vatNumber < 100000000 || vatNumber > 999999999 ) {
+                System.out.println("Is not 9 digits!");
+                isNotOk = true;
+            }
 
+            //check if vat number exist
             for(Account a : accountsList){
-                if( !(a.getIdentityNumber().contentEquals(identityNumber)) || (a.getVatNumber() == vatNumber) ){
-                    currentAccount = new Account(vatNumber, identityNumber);
+                if( a.getVatNumber() == vatNumber ){
 
-                    accountsList.add(currentAccount);
+                    System.out.println("This vat number already exist!");
+                    welcomeScreen();
+
+                    return;
+
                 }
             }
 
-        } while ( currentAccount == null);
+        } while(isNotOk);
+
+
+        String identityNumber;
+
+        //get the identity number from user
+        System.out.print("Enter a identity number :");
+        identityNumber = input.nextLine();
+
+
+
+        //check if identity number exist
+        for(Account a : accountsList){
+            if( a.getIdentityNumber().contentEquals(identityNumber) ){
+
+                System.out.println("This vat number already exist!");
+                welcomeScreen();
+
+                return;
+            }
+
+        }
+
+
+        //create the new account
+        Account currentAccount = new Account(vatNumber, identityNumber);
+
+        accountsList.add(currentAccount);
 
 
         currentAccount.configuringNewAccount();
@@ -145,24 +187,27 @@ public class JavaPhone {
 
     }
 
-    public void printStatistics() throws IOException {
+    private void printStatistics() {
 
+        //Some variables to save the stats
         int counterFix = 0 , counterMobile = 0;
-        int mobileMin = 0, sumMobileMin = 0, minMobileMin = 0, maxMobileMin = 0;
-        int fixMin = 0, sumFixMin = 0 , minFixMin = 0 , maxFixMin = 0;
+        int mobileMin = 0, sumMobileMin = 0, minMobileMin = 1500, maxMobileMin = 0;
+        int fixMin = 0, sumFixMin = 0 , minFixMin = 1500 , maxFixMin = 0;
         String internet = null ;
         int internet24 = 0 , internet30 = 0 , internet50 = 0 ;
 
-        int mobileMinutes = 0, sumMobileMinutes = 0, minMobileMinutes = 0, maxMobileMinutes = 0;
-        int fixMinutes = 0, sumFixMinutes = 0 , minFixMinutes = 0 , maxFixMinutes = 0;
+        int mobileMinutes = 0, sumMobileMinutes = 0, minMobileMinutes = 1500, maxMobileMinutes = 0;
+        int fixMinutes = 0, sumFixMinutes = 0 , minFixMinutes = 1500 , maxFixMinutes = 0;
         int data = 0 , sumData = 0 , minData = 0 , maxData = 0 ;
         int sms = 0 , sumSms = 0 , minSms = 0, maxSms = 0;
 
 
 
+        // get the stats from contracts
         for(Account ac : accountsList) {
             for( Contract con : ac.getContractsList() ) {
 
+                // check if this contract is a FixContract
                 if(con instanceof FixContract) {
 
                     mobileMin = con.getMobileMin();
@@ -199,10 +244,11 @@ public class JavaPhone {
 
                     counterFix++;
 
+                    // Check if is a MobileContract
                 } else if(con instanceof MobileContract) {
 
                     mobileMinutes = con.getMobileMin();
-                    sumFixMinutes += mobileMinutes;
+                    sumMobileMinutes += mobileMinutes;
 
                     if (mobileMinutes > maxMobileMinutes)
                         maxMobileMinutes = mobileMinutes;
@@ -247,6 +293,7 @@ public class JavaPhone {
             }
         }
 
+        //find the most preferred  internet speed
         if( (internet24 >= internet30) && (internet24 >= internet50) ) {
             internet = "24Mbps";
         }
@@ -259,6 +306,7 @@ public class JavaPhone {
             internet = "50Mbps";
         }
 
+        // finding the mean
         if( counterFix != 0 ) {
             if( sumMobileMin != 0 ) {
                 sumMobileMin /= counterFix;
@@ -288,18 +336,19 @@ public class JavaPhone {
             }
         }
 
+
         System.out.println("Fix contracts statistics");
-        System.out.println(" \tMobile Minutes\tFix minutes");
-        System.out.println("Min\t" + minMobileMin + "\t" + minFixMin);
-        System.out.println("Mean\t" + sumMobileMin + "\t" + sumFixMin );
-        System.out.println("Max\t"  + maxMobileMin + "\t" + maxFixMin);
-        System.out.println(" Most preferred network speed is " + internet );
+        System.out.printf("      %-20s %-20s\n","Mobile Minutes", "Fix minutes");
+        System.out.printf("Min   %-20d %-20d\n", minMobileMin, minFixMin);
+        System.out.printf("Mean  %-20d %-20d\n", sumMobileMin, sumFixMin );
+        System.out.printf("Max   %-20d %-20d\n", maxMobileMin, maxFixMin);
+        System.out.println(" Most preferred network speed is " + internet + "\n");
 
         System.out.println("Mobile contracts statistics");
-        System.out.println(" \tMobile Minutes\tFix minutes\tData\tMessages");
-        System.out.println("Min\t" + minMobileMinutes + "\t" + minFixMinutes + "\t" + minData + "\t" + minSms);
-        System.out.println("Mean\t" + sumMobileMinutes  + "\t" + sumFixMinutes + "\t" + sumData + "\t" + sumSms );
-        System.out.println("Min\t" + maxMobileMinutes + "\t" + maxFixMinutes + "\t" + maxData + "\t" + maxSms);
+        System.out.printf("      %-20s %-20s %-20s %-20s\n", "Mobile Minutes", "Fix minutes", "Data", "Messages");
+        System.out.printf("Min   %-20s %-20s %-20s %-20s\n", minMobileMinutes, minFixMinutes, minData, minSms);
+        System.out.printf("Mean  %-20s %-20s %-20s %-20s\n", sumMobileMinutes, sumFixMinutes, sumData, sumSms );
+        System.out.printf("Min   %-20s %-20s %-20s %-20s\n\n", maxMobileMinutes, maxFixMinutes, maxData, maxSms);
 
 
 

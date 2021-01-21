@@ -12,9 +12,12 @@ import java.io.IOException;
  * @author KillB
  */
 public class IT219118 {
-    public static void main(String [] args) throws IOException {
-        
-     new JavaPhone();
+    public static void main(String [] args) {
+
+
+
+        //Create a JavaPhone object
+        JavaPhone myCompanyDatabase = new JavaPhone();
 
     }
 

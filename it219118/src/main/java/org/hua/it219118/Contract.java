@@ -34,6 +34,21 @@ public abstract class Contract {
     private double price;
     Scanner input;
 
+
+    public Contract (int i, int pre) {
+
+        this.id = i;
+        this.phoneNumber = String.valueOf(pre) +String.valueOf(i);
+        this.vatNumber = i;
+        startingDate = LocalDate.now();
+        endingDate = startingDate.plusMonths(((long) 12));
+        payMethod = CREDIT_CART;
+        mobileMin = id/1000000;
+        fixMin = id/1000000;
+
+    }
+
+
     public Contract(int id, String phoneNumber, int vatNumber) {
         this.id = id;
         this.phoneNumber = phoneNumber;
@@ -45,16 +60,32 @@ public abstract class Contract {
     public void configuringContract() {
 
         System.out.println("How match call minutes to mobile phones do you want ?\n" +
-                " Price is 10 cent per minute \n " +
-                " 0. I dont want call minutes to mobile phones \n" +
-                " 1. 120 min \n" +
-                " 2. 480 min \n" +
-                " 3. 1000 min \n" +
-                " 4. 1500 min ");
+                "(Price is 10 cent per minute)\n" +
+                "0. I dont want call minutes to mobile phones \n" +
+                "1. 120 min \n" +
+                "2. 480 min \n" +
+                "3. 1000 min \n" +
+                "4. 1500 min ");
 
         System.out.printf("Choose an option :");
 
-        int userInput = Integer.parseInt(input.nextLine());
+        int userInput = 0;
+        boolean isNotOk;
+
+        //do-while loop until the user give a correct answer
+        do {
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+
+        } while(isNotOk);
 
         switch (userInput) {
             case 1:
@@ -81,15 +112,29 @@ public abstract class Contract {
         }
 
         System.out.println("How match call minutes to fix phones do you want ? \n" +
-                " Price is 5 cent per minute \n " +
-                " 1. 120 min \n" +
-                " 2. 480 min \n" +
-                " 3. 1000 min \n" +
-                " 4. 1500 min ");
+                "Price is 5 cent per minute \n" +
+                "1. 120 min \n" +
+                "2. 480 min \n" +
+                "3. 1000 min \n" +
+                "4. 1500 min ");
 
         System.out.printf("Choose an option :");
 
-        userInput = Integer.parseInt(input.nextLine());
+        //do-while loop until the user give a correct answer
+        do {
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+
+        } while(isNotOk);
+
 
         switch (userInput) {
             case 1:
@@ -111,53 +156,91 @@ public abstract class Contract {
             default:
                 System.out.println("You dont have call minutes to fix phones in your contract");
                 break;
-
-
         }
 
         startingDate = LocalDate.now();
 
-        System.out.printf("In how match days from now do you want to start the contract? : ");
-        userInput = Integer.parseInt(input.nextLine());
+        System.out.printf("In how match days from now do you want to start the contract? (0 start now) : ");
 
-        startingDate.plusDays((long) userInput);
+
+        //do-while loop until the user give a correct answer
+        do {
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+        } while(isNotOk);
+
+        if(userInput > 0) {
+            startingDate = startingDate.plusDays((long) userInput);
+        }
+
         endingDate = startingDate;
 
         System.out.printf("Give the duration of this contract (1 - 24 months) :");
-        userInput = Integer.parseInt(input.nextLine());
-
-        endingDate.plusMonths((long) userInput);
-
-        System.out.println("please enter your payment method \n" +
-                " (if you choose credit cart or Standing order as a payment method you get 5% discount\n" +
-                " 1. Credit card \n" +
-                " 2. Cash \n" +
-                " 3. Standing order ");
-
-        userInput = Integer.parseInt(input.nextLine());
-
-        switch (userInput) {
-            case 1:
-
-                break;
-            case 2:
-                System.out.println("You have 480 min/month");
-                fixMin = 480;
-                break;
-            case 3:
-                System.out.println("You have 1000 min/month");
-                fixMin = 1000;
-                break;
-            case 4:
-                System.out.println("You have 1500 min/month");
-                fixMin = 1500;
-                break;
-            default:
-                System.out.println("You dont have call minutes to fix phones in your contract");
-                break;
 
 
-        }
+        //do-while loop until the user give a correct answer
+        do {
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+
+        } while(isNotOk);
+
+        endingDate = endingDate.plusMonths(((long)userInput));
+
+        //do-while loop until the user give a correct answer
+        do {
+            System.out.println("please enter your payment method \n" +
+                "(if you choose credit cart or Standing order as a payment method you get 5% discount)\n" +
+                "1. Credit card \n" +
+                "2. Cash \n" +
+                "3. Standing order ");
+
+
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+            switch (userInput) {
+                case 1:
+                    payMethod = CREDIT_CART;
+                    break;
+                case 2:
+                    payMethod = CASH;
+                    break;
+                case 3:
+                    payMethod = STANDING_ORDER;
+                    break;
+                default:
+                    System.out.println(userInput + "! is not an option");
+                    isNotOk = true;
+                    break;
+            }
+
+
+        } while(isNotOk);
+
 
     }
 
@@ -170,16 +253,15 @@ public abstract class Contract {
     }
 
     public boolean isActive() {
-        return ((startingDate.compareTo(LocalDate.now()) >= 0) && (endingDate.compareTo(LocalDate.now()) <= 0));
+        if(startingDate.compareTo(LocalDate.now()) >= 0) {
+            return true;
+        }
+        return false;
     }
 
     public int hasMinutesDiscount() {
         if (mobileMin + fixMin >= 1000) {
-            if (phoneNumber.charAt(0) == '2') {
-                return 8;
-            } else {
-                return 11;
-            }
+                return 1;
         }
 
         return 0;
@@ -194,7 +276,7 @@ public abstract class Contract {
 
     @Override
     public String toString() {
-        return String.format("\t" + id + "\t" + startingDate + "\t" + endingDate + "\t" + mobileMin + "\t" + fixMin + "\t");
+        return String.format("%-20d %-20s %-20s %-20s %-20d %-20d ", id, phoneNumber, startingDate.toString(), endingDate.toString(), mobileMin, fixMin );
     }
 
     public String getPhoneNumber() {

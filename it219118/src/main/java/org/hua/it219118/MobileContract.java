@@ -18,12 +18,22 @@ public class MobileContract extends Contract{
     Scanner input;
     
 
+    public MobileContract (int i) {
+
+        super(i , 6);
+        freeData = 3;
+        freeMessages = 250 ;
+    }
+
+
     public MobileContract(int id, String phoneNumber, int vatNumber) {
         super(id, phoneNumber, vatNumber);
         input = new Scanner(System.in);
 
         configuringContract();
     }
+
+
 
     @Override
     public void configuringContract(){
@@ -37,7 +47,23 @@ public class MobileContract extends Contract{
                 " 3. 3GB ");
         System.out.printf("Choose an option :");
 
-        int userInput = Integer.parseInt(input.nextLine());
+        boolean isNotOk;
+        int userInput = 0;
+
+        //do-while loop until the user give a correct answer
+        do {
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+
+        } while(isNotOk);
 
         switch (userInput) {
             case 1:
@@ -73,7 +99,21 @@ public class MobileContract extends Contract{
         System.out.printf("Choose an option :");
 
 
-        userInput = Integer.parseInt(input.nextLine());
+
+        //do-while loop until the user give a correct answer
+        do {
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+
+        } while(isNotOk);
 
         switch (userInput) {
             case 1:
@@ -114,7 +154,10 @@ public class MobileContract extends Contract{
 
     @Override
     public String toString(){
-        return String.format(super.toString() +  freeData + "GB" + "\t" + freeMessages + " sms\t" + this.getPrice() + "€/Month"  );
+        String data = freeData + "GB";
+        String sms = freeMessages + " sms";
+        String pr  = getPrice() + "€/Month";
+        return String.format(super.toString() + "%-20s %-20s %-20s " , data, sms, pr );
     }
 
     @Override
@@ -125,6 +168,15 @@ public class MobileContract extends Contract{
     @Override
     public int getMessages() {
         return freeMessages;
+    }
+
+    @Override
+    public int hasMinutesDiscount() {
+        if(super.hasMinutesDiscount() == 1) {
+            return 11;
+        }
+
+        return 0;
     }
     
 }

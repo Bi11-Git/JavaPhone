@@ -17,6 +17,14 @@ public class FixContract extends Contract {
     private String networkType;
     Scanner input;
 
+    public FixContract (int i) {
+
+        super(i , 2);
+
+        networkType = "VDSL";
+        networkSpeed = "30Mbps";
+
+    }
     public FixContract(int id, String phoneNumber, int vatNumber) {
 
         super(id, phoneNumber, vatNumber);
@@ -24,6 +32,7 @@ public class FixContract extends Contract {
 
         configuringContract();
     }
+
 
     @Override
     public void configuringContract(){
@@ -33,12 +42,28 @@ public class FixContract extends Contract {
 
         System.out.println("Choose your internet connection \n" +
                 "0. I dont want internet\n" +
-                " 1. ADSL-24mbps Price: 10€ \n" +
-                " 2. VDSL-30mbps Price: 15€\n" +
-                " 3. VDSL-50Mbps Price: 20€");
+                "1. ADSL-24mbps Price: 10€ \n" +
+                "2. VDSL-30mbps Price: 15€\n" +
+                "3. VDSL-50Mbps Price: 20€");
         System.out.printf("Choose an option :");
 
-        int userInput = Integer.parseInt(input.nextLine());
+        boolean isNotOk;
+        int userInput = 0;
+
+        //do-while loop until the user give a correct answer
+        do {
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+
+        } while(isNotOk);
 
 
         switch (userInput) {
@@ -86,12 +111,23 @@ public class FixContract extends Contract {
 
     @Override
     public String toString(){
-        return String.format(super.toString() + networkType + "-" + networkSpeed + "\tNo sms" + "\t" + this.getPrice() + "€/Month"  );
+        String network = networkSpeed + "-" + networkType;
+        String pr = getPrice() + "€/Month";
+        return String.format(super.toString() + "%-20s %-20s %-20s ", network, "No sms", pr  );
     }
 
     @Override
     public String getInternet() {
         return networkSpeed;
+    }
+
+    @Override
+    public int hasMinutesDiscount() {
+        if(super.hasMinutesDiscount() == 1) {
+            return 8;
+        }
+
+        return 0;
     }
 
 }

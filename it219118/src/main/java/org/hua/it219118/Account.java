@@ -39,6 +39,18 @@ public class Account {
     private Scanner input;
     private Random rand;
 
+    public Account(int vatNumber) {
+        contractsList = new ArrayList<Contract>();
+        input = new Scanner(System.in);
+        this.vatNumber = vatNumber;
+        this.identityNumber = String.valueOf(vatNumber);
+        eAccount = 0;
+        rand = new Random();
+
+        configuringDefaultAccount();
+
+
+    }
     public Account(int vatNumber, String identityNumber) {
 
         contractsList = new ArrayList<Contract>();
@@ -52,29 +64,48 @@ public class Account {
 
     public void configuringNewAccount() {
 
-        System.out.println("what account do you want to have?");
-        System.out.println( INDIVIDUAL + " : individual account");
-        System.out.println( PROFESSIONAL + " : professional account");
-        System.out.println( STUDENT + " : student account");
-        System.out.println("Choose an option :");
+        System.out.print("what account do you want to have?\n" +
+                "1 : individual account\n" +
+                "2 : professional account\n" +
+                "3 : student account\n" +
+                "Choose an option :");
 
-        int userInput = Integer.parseInt(input.nextLine());
+        boolean isNotOk;
+        int userInput = 0;
 
-        switch (userInput) {
-            case Account.INDIVIDUAL:
-                category = INDIVIDUAL;
-                break;
-            case Account.PROFESSIONAL:
-                category = PROFESSIONAL;
-                discount = PROFESSIONAL;
-                break;
-            case Account.STUDENT:
-                category = STUDENT;
-                discount = STUDENT;
-                break;
-            default:
-                break;
-        }
+        //do-while loop until the user give a correct answer
+        do {
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+            // switch for the user's choice
+            switch (userInput) {
+                case 1 :
+                    category = INDIVIDUAL;
+                    break;
+                case 2 :
+                    category = PROFESSIONAL;
+                    discount = PROFESSIONAL;
+                    break;
+                case 3 :
+                    category = STUDENT;
+                    discount = STUDENT;
+                    break;
+                default:
+                    isNotOk = true;
+                    System.out.println( userInput + " it is not an option!");
+                    break;
+            }
+
+
+        } while(isNotOk);
 
         System.out.println("Enter an e-mail :");
         email = input.nextLine();
@@ -82,7 +113,7 @@ public class Account {
         System.out.println("Enter an address :");
         address = input.nextLine();
 
-        System.out.println("e-Accounts have +2% discount \n Do you want an e-Account (Y/N) :");
+        System.out.print("e-Accounts have +2% discount \nDo you want an e-Account (Y/N) :");
         String answer = input.nextLine();
 
         switch (answer) {
@@ -92,13 +123,42 @@ public class Account {
             case "y":
             case "Y":
                 eAccount = 2;
+                System.out.println("You have an e-Account");
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + answer);
+                System.out.println("you have not an e-Account");
+                break;
         }
 
         addContract();
 
+    }
+
+    public void configuringDefaultAccount() {
+
+        if(vatNumber == 111111111) {
+            category = PROFESSIONAL;
+            discount = PROFESSIONAL;
+            email = "Cosmote@istrash.gr";
+            address = "Ελ. Βενιζέλου 70, Μοσχάτο 176 71";
+            eAccount = 2;
+            contractsList.add(new FixContract(111111111));
+            contractsList.add(new MobileContract(222222222));
+
+
+        } else {
+            category = INDIVIDUAL;
+            discount = INDIVIDUAL;
+            email = "Wind@istrash.gr";
+            address = "Ομήρου 9, Ταύρος Αττικής 177 78";
+            eAccount = 0;
+            contractsList.add(new FixContract(333333333));
+            contractsList.add(new MobileContract(444444444));
+
+
+        }
+
+        checkDiscount();
     }
 
     public void mainMenu(){
@@ -106,10 +166,27 @@ public class Account {
         System.out.println("1 : add new contract");
         System.out.println("2 : delete a contract");
         System.out.println("3 : show all contract's details");
+        System.out.println("4 : Show account details");
         System.out.println("0 : sign out");
         System.out.printf("Choose an option :");
 
-        int userInput = Integer.parseInt(input.nextLine());
+        boolean isNotOk;
+        int userInput = 0;
+
+        //do-while loop until the user give a correct answer
+        do {
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+
+        } while(isNotOk);
 
         switch(userInput) {
             case 1:
@@ -120,10 +197,15 @@ public class Account {
                 break;
             case 3:
                 showContractDetails();
+                mainMenu();
+                break;
+            case 4:
+                showAccountDetails();
                 break;
             case 0:
                 return;
             default:
+                System.out.println(userInput + "! Is not an option");
                 mainMenu();
                 break;
         }
@@ -146,8 +228,23 @@ public class Account {
         System.out.printf("choose an option :");
 
 
-        int userInput = Integer.parseInt(input.nextLine());
+        boolean isNotOk;
+        int userInput = 0;
 
+        //do-while loop until the user give a correct answer
+        do {
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+
+        } while(isNotOk);
 
         switch (userInput) {
             case 1:
@@ -157,50 +254,53 @@ public class Account {
                 createContract(MOBILE);
                 break;
             default:
-                mainMenu();
+                System.out.println(userInput + "! Is not an option");
+                addContract();
                 break;
 
         }
     }
 
+    // create a contract
     public void createContract( String prefix) {
-
 
         System.out.printf("Enter next 9 digits for your fix phone number :" + prefix);
         FixContract currentContract = null;
-        boolean exist;
+        boolean isNotOk;
         String userInput;
 
         do{
-            exist = false;
+            isNotOk = false;
             userInput = prefix + input.nextLine();
 
             if(userInput.length() != 10) {
-                System.out.println(userInput + "! Is not 10 digits!!!");
-                exist = true;
+                System.out.println(userInput + "! Is not 10 digits!!!\n" + prefix);
+                isNotOk = true;
             }
 
             for(String number : phoneNumbersList) {
                 if( number.contentEquals(userInput)) {
                     System.out.println("This number already exist!");
                     System.out.printf("Enter next 9 digits for your fix phone number :2");
-                    exist = true;
+                    isNotOk = true;
                 }
             }
 
-
-        } while (exist);
+        } while (isNotOk);
 
         Contract n;
 
-        if(prefix.contentEquals("2")) {
+        // create a fix contract or mobile contract
+        if(prefix.contentEquals(FIX)) {
             n = new FixContract(rand.nextInt(10000), userInput, vatNumber);
         } else {
             n = new MobileContract(rand.nextInt(10000), userInput, vatNumber);
 
         }
 
+        //add the new contract to the list
         this.contractsList.add(n);
+        //add the new phone number to the list
         this.phoneNumbersList.add(userInput);
 
         checkDiscount();
@@ -211,17 +311,40 @@ public class Account {
 
     public void showContractDetails() {
 
-        System.out.println(" \tid\tstarting date\texpiration date\tminutes to cell phones\tminutes to fix phones\tinternet\tsms\tprice\tprice after discount ");
+        System.out.printf("Identity Number :%s \nVat Number :%d\nTotal Discount :%s\n", identityNumber, vatNumber, discount + "%");
+        System.out.printf("  %-20s %-20s %-20s %-20s %-20s %-20s %-20s %-20s %-20s %-20s \n", "id", "Phone number", "starting date", "expiration date", "minutes to mobile", "minutes to fix", "internet", "sms", "price", "price after discount");
 
         int count = 1;
+        //for loop to iterate all contracts and print their details
         for(Contract c : contractsList) {
             Double d = (c.getPrice() * (100 - discount) ) / 100 ;
-            System.out.println(count + c.toString() + d );
+            String pr = d + "€/Month";
+            System.out.println(count + " " + c.toString() + pr );
             count++;
         }
 
+        System.out.println("\n");
 
-        mainMenu();
+    }
+
+    public void showAccountDetails() {
+
+        System.out.println("\nVat Number :" + vatNumber);
+        System.out.println("Identity Number :" + identityNumber);
+
+        if(category == INDIVIDUAL) {
+            System.out.println("Individual Account");
+        } else if(category == PROFESSIONAL) {
+            System.out.println("Professional Account");
+        } else {
+            System.out.println("Student Account");
+        }
+
+        System.out.println("Email :" + email);
+        System.out.println("Address : " + address);
+        System.out.println("Total discount for all our services " + discount + "%  \n");
+
+
     }
 
     
@@ -230,24 +353,59 @@ public class Account {
         showContractDetails();
 
         System.out.print(" Which contract do you want to delete? :");
-        int userInput = Integer.parseInt(input.nextLine());
 
-        if ( contractsList.size() <= userInput) {
-            Contract c = contractsList.get(userInput - 1);
-            contractsList.remove(userInput - 1);
+        boolean isNotOk;
+        int userInput = 0;
 
+        //do-while loop until the user give a correct answer
+        do {
+            isNotOk = false;
+
+            // if the user's answer it is not a number then flag (isNotOk) is true and repeat the loop
+            try {
+                userInput = Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                isNotOk = true;
+            }
+
+            if(userInput < 0) {
+                System.out.println("Only positive integers please");
+                isNotOk = true;
+            }
+
+
+        } while(isNotOk);
+
+
+        if ( contractsList.size() >= userInput ) {
+
+            userInput--;
+
+            //get and remove that contract
+            Contract c = contractsList.get(userInput);
+            contractsList.remove(userInput);
+
+            System.out.println("Contract deleted!");
+
+            //find that phone number on the list and remove it
             for ( int i = 0 ; i < phoneNumbersList.size() ; i++ ) {
                 String num = phoneNumbersList.get(i);
                 if( num.contentEquals(c.getPhoneNumber())) {
                     phoneNumbersList.remove(i);
                 }
             }
+        } else {
+            System.out.println("This contact doesnt exist!");
         }
+
+
 
         checkDiscount();
         mainMenu();
     }
 
+    //calculate the discount
     public void checkDiscount() {
 
         discount = eAccount + category;
