@@ -11,6 +11,12 @@ it219118 Αντζέλντο Χύσκαϊ
 
 ## Usage
 
+Install Java
+
+```
+sudo apt-get install openjdk-11-jdk
+```
+
 Install maven
 
 ```
