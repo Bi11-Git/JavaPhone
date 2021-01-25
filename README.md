@@ -9,7 +9,7 @@ To javaPhone είναι ένα πρόγραμμα διαχείρησης συμ�
 
 it219118 Αντζέλντο Χύσκαϊ
 
-## Usage
+## installations
 
 Install Java
 
@@ -22,6 +22,8 @@ Install maven
 ```
 sudo apt install maven
 ```
+
+## Usage
 
 Compile using 
 
