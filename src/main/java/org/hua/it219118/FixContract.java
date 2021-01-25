@@ -44,8 +44,8 @@ public class FixContract extends Contract {
                 "0. I dont want internet\n" +
                 "1. ADSL-24mbps Price: 10€ \n" +
                 "2. VDSL-30mbps Price: 15€\n" +
-                "3. VDSL-50Mbps Price: 20€");
-        System.out.print("Choose an option :");
+                "3. VDSL-50Mbps Price: 20€" +
+                "Choose an option :");
 
         boolean isNotOk;
         int userInput = 0;
@@ -112,8 +112,8 @@ public class FixContract extends Contract {
     @Override
     public String toString(){
         String network = networkSpeed + "-" + networkType;
-        String pr = getPrice() + "€/Month";
-        return String.format(super.toString() + "%-20s %-20s %-20s ", network, "No sms", pr  );
+        String pr = (int)Math.round(getPrice()) + "€/Month";
+        return String.format(super.toString() + "%-11s %-8s %-10s ", network, "No sms", pr  );
     }
 
     @Override

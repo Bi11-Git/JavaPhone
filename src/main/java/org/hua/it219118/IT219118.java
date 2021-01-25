@@ -17,7 +17,7 @@ public class IT219118 {
 
 
         //Create a JavaPhone object
-        JavaPhone myCompanyDatabase = new JavaPhone();
+        new JavaPhone();
 
     }
 

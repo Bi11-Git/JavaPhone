@@ -34,14 +34,14 @@ public abstract class Contract {
 
     public Contract (int i, int pre) {
 
-        this.id = i;
+        this.id = i/1000000;
         this.phoneNumber = String.valueOf(pre) + String.valueOf(i);
         this.vatNumber = i;
         startingDate = LocalDate.now();
         endingDate = startingDate.plusMonths(((long) 12));
         payMethod = CREDIT_CART;
-        mobileMin = id/1000000;
-        fixMin = id/1000000;
+        mobileMin = i/1000000;
+        fixMin = i/1000000;
 
     }
 
@@ -273,7 +273,7 @@ public abstract class Contract {
 
     @Override
     public String toString() {
-        return String.format("%-20d %-20s %-20s %-20s %-20d %-20d ", id, phoneNumber, startingDate.toString(), endingDate.toString(), mobileMin, fixMin );
+        return String.format("%-3d %-12s %-13s %-15s %-17d %-14d ", id, phoneNumber, startingDate.toString(), endingDate.toString(), mobileMin, fixMin );
     }
 
     public String getPhoneNumber() {

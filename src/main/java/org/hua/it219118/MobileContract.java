@@ -156,8 +156,8 @@ public class MobileContract extends Contract{
     public String toString(){
         String data = freeData + "GB";
         String sms = freeMessages + " sms";
-        String pr  = getPrice() + "€/Month";
-        return String.format(super.toString() + "%-20s %-20s %-20s " , data, sms, pr );
+        String pr  = (int)Math.round(getPrice()) + "€/Month";
+        return String.format(super.toString() + "%-11s %-8s %-10s " , data, sms, pr );
     }
 
     @Override

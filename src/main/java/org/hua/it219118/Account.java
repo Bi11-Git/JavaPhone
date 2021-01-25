@@ -201,6 +201,7 @@ public class Account {
                 break;
             case 4:
                 showAccountDetails();
+                mainMenu();
                 break;
             case 0:
                 return;
@@ -291,9 +292,9 @@ public class Account {
 
         // create a fix contract or mobile contract
         if(prefix.contentEquals(FIX)) {
-            n = new FixContract(rand.nextInt(10000), userInput, vatNumber);
+            n = new FixContract(rand.nextInt(1000), userInput, vatNumber);
         } else {
-            n = new MobileContract(rand.nextInt(10000), userInput, vatNumber);
+            n = new MobileContract(rand.nextInt(1000), userInput, vatNumber);
 
         }
 
@@ -311,13 +312,13 @@ public class Account {
     public void showContractDetails() {
 
         System.out.printf("Identity Number :%s \nVat Number :%d\nTotal Discount :%s\n", identityNumber, vatNumber, discount + "%");
-        System.out.printf("  %-20s %-20s %-20s %-20s %-20s %-20s %-20s %-20s %-20s %-20s \n", "id", "Phone number", "starting date", "expiration date", "minutes to mobile", "minutes to fix", "internet", "sms", "price", "price after discount");
+        System.out.printf("  %-3s %-12s %-13s %-15s %-17s %-14s %-11s %-8s %-10s %s \n", "id", "Phone number", "starting date", "expiration date", "minutes to mobile", "minutes to fix", "internet", "sms", "price", "price after discount");
 
         int count = 1;
         //for loop to iterate all contracts and print their details
         for(Contract c : contractsList) {
             Double d = (c.getPrice() * (100 - discount) ) / 100 ;
-            String pr = d + "€/Month";
+            String pr = (int) Math.round(d) + "€/Month";
             System.out.println(count + " " + c.toString() + pr );
             count++;
         }

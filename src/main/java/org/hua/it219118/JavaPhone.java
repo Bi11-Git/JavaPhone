@@ -337,7 +337,7 @@ public class JavaPhone {
         }
 
 
-        System.out.println("Fix contracts statistics");
+        System.out.println("\nFix contracts statistics");
         System.out.printf("      %-20s %-20s\n","Mobile Minutes", "Fix minutes");
         System.out.printf("Min   %-20d %-20d\n", minMobileMin, minFixMin);
         System.out.printf("Mean  %-20d %-20d\n", sumMobileMin, sumFixMin );
@@ -348,7 +348,7 @@ public class JavaPhone {
         System.out.printf("      %-20s %-20s %-20s %-20s\n", "Mobile Minutes", "Fix minutes", "Data", "Messages");
         System.out.printf("Min   %-20s %-20s %-20s %-20s\n", minMobileMinutes, minFixMinutes, minData, minSms);
         System.out.printf("Mean  %-20s %-20s %-20s %-20s\n", sumMobileMinutes, sumFixMinutes, sumData, sumSms );
-        System.out.printf("Min   %-20s %-20s %-20s %-20s\n\n", maxMobileMinutes, maxFixMinutes, maxData, maxSms);
+        System.out.printf("Max   %-20s %-20s %-20s %-20s\n\n", maxMobileMinutes, maxFixMinutes, maxData, maxSms);
 
 
 
