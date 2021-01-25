@@ -11,6 +11,12 @@ it219118 Αντζέλντο Χύσκαϊ
 
 ## Usage
 
+Install maven
+
+```
+sudo apt install maven
+```
+
 Compile using 
 
 ```
